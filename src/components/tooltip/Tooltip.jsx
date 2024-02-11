@@ -55,8 +55,6 @@ function Tooltip({ title, placement = "top", children }) {
       [
         ['mouseenter', showTooltip],
         ['mouseleave', hideTooltip],
-        ['focus', showTooltip],
-        ['blur', hideTooltip],
       ].forEach(([event, listener]) => {
         childRef.current.firstChild.addEventListener(event, listener);
       });

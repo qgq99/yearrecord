@@ -1,21 +1,34 @@
 // import { Tooltip } from "antd";
 import "./monthRecord.css";
-import { dayOfTheWeek, convertToRGBA } from "../../utils/tool";
+import { dayOfTheWeek, convertToRGBA, calcColumnCnt } from "../../utils/tool";
 import Tooltip from "../tooltip/ToolTip";
 
-function MonthRecord({ itemWidth = "15px", itemHeight = "15px", itemBorderRadius = "5px", gridRowGap = "3px", gridColumnGap = "3px", year, month, data, themeColor = "red", tooltipTitileFunc = _ => "" }) {
-  const week = dayOfTheWeek(year, month);
-  console.log(week);
+function MonthRecord({
+  itemWidth = "15px",
+  itemHeight = "15px",
+  itemBorderRadius = "5px",
+  gridRowGap = "3px",
+  gridColumnGap = "3px",
+  year,
+  month,
+  data,
+  themeColor = "red",
+  tooltipTitileFunc = _ => "tooltip title",
+  tooltipTitlePlacement = "top",
+  compact = false
+}) {
+  const week = compact ? dayOfTheWeek(data[0]["year"], data[0]["month"], data[0]["day"]) : dayOfTheWeek(year, month, 1);
   const hiddenList = new Array(week - 1).fill(0);
-  const remaining = 43 - week - data.length;  // 结尾剩余几个需要隐藏的，若为7个，则取消最后一列
-  const tailList = new Array(remaining < 7 ? remaining : 0).fill(0);
+  const colNeed = calcColumnCnt(year, month, 1, data.length);
+  console.log(month, colNeed);
+  const tailList = new Array(colNeed * 7 - week + 1 - data.length).fill(0); // 结尾剩余几个需要隐藏的，若为7个，则取消最后一列
   console.log(data);
   const mrContainerStyle = {
     boxSizing: "border-box",
     padding: "5px",
     display: "grid",
     gridTemplateRows: `repeat(7, ${itemHeight})`,
-    gridTemplateColumns: `repeat(${remaining < 7 ? 6 : 5}, ${itemWidth})`,
+    gridTemplateColumns: `repeat(${colNeed}, ${itemWidth})`,
     rowGap: gridRowGap,
     columnGap: gridColumnGap,
     gridAutoFlow: "column",
@@ -44,7 +57,7 @@ function MonthRecord({ itemWidth = "15px", itemHeight = "15px", itemBorderRadius
           {
             data.map((v, i) => {
               return (
-                <Tooltip title={tooltipTitileFunc(v)} key={i} placement="bottom">
+                <Tooltip title={tooltipTitileFunc(v)} key={i} placement={tooltipTitlePlacement}>
                   <div className="day-record" style={{
                     "--itemBorderRadius": itemBorderRadius,
                     "--themeColor": convertToRGBA(themeColor, v.data / mxData + 0.05),
@@ -65,7 +78,9 @@ function MonthRecord({ itemWidth = "15px", itemHeight = "15px", itemBorderRadius
             })
           }
         </div>
-        <span>{month}月</span>
+        {
+          compact ? <></> : <span>{month}月</span>
+        }
       </div>
 
     </>
