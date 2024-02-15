@@ -1,8 +1,23 @@
-# React + Vite
+# yearrecord
+A react component that displays data for each day of the year
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+You can use it like this:
+```jsx
+import YearRecord from "./components/yearrecord/YearRecord"
 
-Currently, two official plugins are available:
+function App() {
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  return (
+    <>
+      <YearRecord
+        themeColor="green"
+        tooltipTitileFunc={item => `${item.year}年${item.month}月${item.day}日, ${item.data}次浏览`}
+      ></YearRecord>
+    </>
+  )
+}
+
+export default App
+```
+then you will see:
+![image](https://github.com/qgq99/yearrecord/assets/58081507/8fefb3dc-a94d-455e-87fd-420093ca7ca8)
