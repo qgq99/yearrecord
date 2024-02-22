@@ -1,7 +1,7 @@
 // import { Tooltip } from "antd";
 import "./monthRecord.css";
-import { dayOfTheWeek, convertToRGBA, calcColumnCnt } from "../../utils/tool";
-import Tooltip from "../tooltip/ToolTip";
+import { dayOfTheWeek, convertToRGBA, calcColumnCnt, generateRandomMonthData } from "../../utils/tool";
+import Tooltip from "../tooltip/Tooltip";
 
 function MonthRecord({
   itemWidth = "15px",
@@ -9,20 +9,23 @@ function MonthRecord({
   itemBorderRadius = "5px",
   gridRowGap = "3px",
   gridColumnGap = "3px",
-  year,
-  month,
+  year = new Date().getFullYear(),
+  month = new Date().getMonth() + 1,
   data,
   themeColor = "red",
   tooltipTitileFunc = _ => "tooltip title",
   tooltipTitlePlacement = "top",
   compact = false
 }) {
+
+  if (!data) {
+    //若未传入数据, 使用随机生成的假数据
+    data = generateRandomMonthData(year, month, 0, 100);
+  }
   const week = compact ? dayOfTheWeek(data[0]["year"], data[0]["month"], data[0]["day"]) : dayOfTheWeek(year, month, 1);
   const hiddenList = new Array(week - 1).fill(0);
   const colNeed = calcColumnCnt(year, month, 1, data.length);
-  console.log(month, colNeed);
   const tailList = new Array(colNeed * 7 - week + 1 - data.length).fill(0); // 结尾剩余几个需要隐藏的，若为7个，则取消最后一列
-  console.log(data);
   const mrContainerStyle = {
     boxSizing: "border-box",
     padding: "5px",
