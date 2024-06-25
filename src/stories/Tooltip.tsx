@@ -3,14 +3,14 @@ import "./tooltip.css"
 import { autoUpdate, flip, offset, shift, useDismiss, useFloating, useHover, useInteractions, useRole, FloatingArrow, arrow } from "@floating-ui/react";
 
 
+export type placementType = "top" | "left" | "right" | "bottom" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end";
+
 
 interface TooltipProps {
   title: String,
-  placement: | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end",
+  placement:  placementType,
   children: React.ReactElement
 }
-
-
 
 export const Tooltip = ({ title, placement, children }: TooltipProps) => {
 

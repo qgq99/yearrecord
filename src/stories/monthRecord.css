@@ -1,0 +1,7 @@
+.mr-container .day-record {
+  width: var(--itemWidth);
+  height: var(--itemHeight);
+  border-radius: var(--itemBorderRadius);
+  background-color: var(--themeColor);
+  cursor: pointer;
+}
