@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { generateRandomMonthData } from '../utils/tool';
 
-import { Month, MonthRecord } from './MonthRecord';
+import { YearRecord } from './YearRecord';
+import { DataRecord } from './MonthRecord';
 
 const meta = {
-  component: MonthRecord,
-  parameters:{
+  component: YearRecord,
+  parameters: {
     layout: "centered"
   }
-} satisfies Meta<typeof MonthRecord>;
+} satisfies Meta<typeof YearRecord>;
 
 export default meta;
 
@@ -22,11 +22,11 @@ export const Default: Story = {
     gridRowGap: "3px",
     gridColumnGap: "3px",
     year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1 as Month,
     data: undefined,
     themeColor: "red",
-    tooltipTitileFunc: _ => `tooltip title, ${_.data}`,
+    tooltipTitileFunc: (_: DataRecord) => "tooltip title",
     tooltipTitlePlacement: "top",
     compact: false
   }
+
 };

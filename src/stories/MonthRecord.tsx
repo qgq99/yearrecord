@@ -1,5 +1,5 @@
-import { CSSProperties } from "react"
-import { generateRandomMonthData, dayOfTheWeek, calcColumnCnt, convertToRGBA } from "../utils/tool"
+import { CSSProperties, useMemo } from "react"
+import { generateRandomMonthData, dayOfTheWeek, calcColumnCnt, convertToRGBA, getMaxAndMinValue } from "../utils/tool"
 import "./monthRecord.css"
 import { placementType, Tooltip } from "./Tooltip"
 
@@ -69,7 +69,8 @@ export const MonthRecord = ({
     "--itemWidth": itemWidth,
     "--itemHeight": itemHeight
   }
-  const mxData = Math.max(...(data.map(item => item.data)));
+  const [mxData, mnData] = useMemo(() => getMaxAndMinValue(data.map(_ => _.data)), []);
+  
   return (
     <>
       <div style={{
@@ -94,7 +95,7 @@ export const MonthRecord = ({
                 <Tooltip title={tooltipTitileFunc(v)} key={i} placement={tooltipTitlePlacement}>
                   <div className="day-record" style={{
                     "--itemBorderRadius": itemBorderRadius,
-                    "--themeColor": convertToRGBA(themeColor, v.data / mxData + 0.05),
+                    "--themeColor": convertToRGBA(themeColor, (v.data - mnData) / (mxData - mnData)),
                   } as CSSProperties}></div>
                 </Tooltip>
               )

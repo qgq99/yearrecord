@@ -6,7 +6,7 @@ import { DataRecord, Day, Month } from "../stories/MonthRecord";
  * @param {*} month 
  * @returns 
  */
-const dayOfTheWeek = (year: number, month: number, day: number): number => {
+const dayOfTheWeek = (year: number, month: Month, day: number): number => {
   // const week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
   const monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30];
   /* 输入年份之前的年份的天数贡献 */
@@ -94,7 +94,7 @@ function convertToRGBA(colorString: string, opacity: number): string {
  * @param {*} day 
  * @param {*} dataCnt 
  */
-const calcColumnCnt = (year: number, month: number, day: number, dataCnt: number): number => {
+const calcColumnCnt = (year: number, month: Month, day: number, dataCnt: number): number => {
   dataCnt += dayOfTheWeek(year, month, day) - 1;
   return dataCnt % 7 === 0 ? dataCnt / 7 : Math.ceil(dataCnt / 7);
 }
@@ -122,10 +122,22 @@ const generateRandomCompactData = (year: number, month: number, day: number, dat
   return fakeData;
 }
 
+const getMaxAndMinValue = (nums: number[]): [number, number] => {
+  let mx = Number.NEGATIVE_INFINITY, mn = Number.POSITIVE_INFINITY;
+  for (let i of nums) {
+    mx = Math.max(mx, i);
+    mn = Math.min(mn, i);
+  }
+  return [mx, mn];
+}
+
+
+
 export {
   dayOfTheWeek,
   generateRandomMonthData,
   convertToRGBA,
   calcColumnCnt,
-  generateRandomCompactData
+  generateRandomCompactData,
+  getMaxAndMinValue
 }
