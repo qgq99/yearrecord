@@ -3,5 +3,7 @@
   height: var(--itemHeight);
   border-radius: var(--itemBorderRadius);
   background-color: var(--themeColor);
+  opacity: var(--opacity);
   cursor: pointer;
+  z-index: -9999;
 }

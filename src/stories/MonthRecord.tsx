@@ -95,7 +95,8 @@ export const MonthRecord = ({
                 <Tooltip title={tooltipTitileFunc(v)} key={i} placement={tooltipTitlePlacement}>
                   <div className="day-record" style={{
                     "--itemBorderRadius": itemBorderRadius,
-                    "--themeColor": convertToRGBA(themeColor, (v.data - mnData) / (mxData - mnData)),
+                    "--themeColor": themeColor,
+                    "--opacity": (v.data - mnData) / (mxData - mnData) + 0.05
                   } as CSSProperties}></div>
                 </Tooltip>
               )

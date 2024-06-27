@@ -12,7 +12,7 @@ interface TooltipProps {
   children: React.ReactElement
 }
 
-export const Tooltip = ({ title, placement, children }: TooltipProps) => {
+export const Tooltip = ({ title = "Tooltip title", placement = "top", children }: TooltipProps) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const arrowRef = useRef(null);
