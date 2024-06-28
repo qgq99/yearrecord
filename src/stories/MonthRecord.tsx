@@ -42,7 +42,7 @@ export const MonthRecord = ({
   year = new Date().getFullYear(),
   month = new Date().getMonth() + 1 as Month,
   data,
-  themeColor = "red",
+  themeColor = "#39d353",
   tooltipTitileFunc = _ => "tooltip title",
   tooltipTitlePlacement = "top",
   compact = false

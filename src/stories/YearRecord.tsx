@@ -1,24 +1,27 @@
-import { useMemo } from "react";
 import { generateRandomCompactData, generateRandomMonthData } from "../utils/tool";
 import { DataRecord, Month, MonthRecord, MonthRecordProps } from "./MonthRecord";
 
 
-// type YearRecordProps = Omit<MonthRecordProps, "month">
+// type y = Omit<MonthRecordProps, "month">
 
-interface YearRecordProps extends Omit<MonthRecordProps, "month" | "data"> {
+// export interface YearRecordProps extends Omit<MonthRecordProps, "month" | "data"> {
+//   data: DataRecord[][] | DataRecord[] | undefined
+// }
+
+export type YearRecordProps =  Omit<MonthRecordProps, "month" | "data"> & {
   data: DataRecord[][] | DataRecord[] | undefined
 }
 
 
 export const YearRecord = ({
-  itemWidth = "15px",
-  itemHeight = "15px",
-  itemBorderRadius = "5px",
+  itemWidth = "10px",
+  itemHeight = "10px",
+  itemBorderRadius = "3px",
   gridRowGap = "3px",
   gridColumnGap = "3px",
   year = new Date().getFullYear(),
   data,
-  themeColor = "red",
+  themeColor = "#39d353",
   tooltipTitileFunc = _ => "tooltip title",
   tooltipTitlePlacement = "top",
   compact = false
