@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Tooltip } from './Tooltip';
-import { Fragment } from 'react/jsx-runtime';
+// import { Fragment } from 'react/jsx-runtime';
 
 const meta = {
   component: Tooltip,

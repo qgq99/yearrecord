@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { generateRandomMonthData } from '../utils/tool';
+// import { generateRandomMonthData } from '../utils/tool';
 
-import { Month, MonthRecord, MonthRecordProps } from './MonthRecord';
+import { MonthRecord, MonthRecordProps } from './MonthRecord';
 
 const meta = {
   component: MonthRecord,

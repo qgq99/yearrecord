@@ -1,5 +1,5 @@
 import { CSSProperties, useMemo } from "react"
-import { generateRandomMonthData, dayOfTheWeek, calcColumnCnt, convertToRGBA, getMaxAndMinValue } from "../utils/tool"
+import { generateRandomMonthData, dayOfTheWeek, calcColumnCnt, getMaxAndMinValue } from "../utils/tool"
 import "./monthRecord.css"
 import { placementType, Tooltip } from "./Tooltip"
 
