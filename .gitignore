@@ -9,6 +9,8 @@ lerna-debug.log*
 
 .cache
 node_modules
+# 组件库打包目录
+lib
 dist
 dist-ssr
 storybook-static
