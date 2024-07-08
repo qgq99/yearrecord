@@ -1,4 +1,4 @@
-import { CSSProperties, useMemo } from "react"
+import React, { CSSProperties, useMemo } from "react"
 import { generateRandomMonthData, dayOfTheWeek, calcColumnCnt, getMaxAndMinValue } from "../utils/tool"
 import "./monthRecord.css"
 import { placementType, Tooltip } from "./Tooltip"
@@ -16,7 +16,7 @@ export interface DataRecord {
 }
 
 
-export interface MonthRecordProps {
+interface MonthRecordProps_ {
   itemWidth: string,
   itemHeight: string,
   itemBorderRadius: string,
@@ -31,9 +31,10 @@ export interface MonthRecordProps {
   compact: boolean
 }
 
+export type MonthRecordProps = Partial<MonthRecordProps_>;
 
 
-export const MonthRecord = ({
+export const MonthRecord: React.FC<MonthRecordProps> = ({
   itemWidth = "15px",
   itemHeight = "15px",
   itemBorderRadius = "5px",

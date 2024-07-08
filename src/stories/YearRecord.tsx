@@ -1,3 +1,4 @@
+import React from "react";
 import { generateRandomCompactData, generateRandomMonthData } from "../utils/tool";
 import { DataRecord, Month, MonthRecord, MonthRecordProps } from "./MonthRecord";
 
@@ -8,12 +9,12 @@ import { DataRecord, Month, MonthRecord, MonthRecordProps } from "./MonthRecord"
 //   data: DataRecord[][] | DataRecord[] | undefined
 // }
 
-export type YearRecordProps =  Omit<MonthRecordProps, "month" | "data"> & {
+export type YearRecordProps = Partial<Omit<MonthRecordProps, "month" | "data"> & {
   data: DataRecord[][] | DataRecord[] | undefined
-}
+}>
 
 
-export const YearRecord = ({
+export const YearRecord: React.FC<YearRecordProps> = ({
   itemWidth = "10px",
   itemHeight = "10px",
   itemBorderRadius = "3px",

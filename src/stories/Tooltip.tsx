@@ -6,13 +6,13 @@ import { autoUpdate, flip, offset, shift, useDismiss, useFloating, useHover, use
 export type placementType = "top" | "left" | "right" | "bottom" | "top-start" | "top-end" | "right-start" | "right-end" | "bottom-start" | "bottom-end" | "left-start" | "left-end";
 
 
-interface TooltipProps {
-  title: String,
-  placement:  placementType,
-  children: React.ReactElement
+export interface TooltipProps {
+  title?: String,
+  placement?: placementType,
+  children?: React.ReactElement
 }
 
-export const Tooltip = ({ title = "Tooltip title", placement = "top", children }: TooltipProps) => {
+export const Tooltip: React.FC<TooltipProps> = ({ title = "Tooltip title", placement = "top", children }: TooltipProps) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const arrowRef = useRef(null);
