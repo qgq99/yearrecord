@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "build-lib": "rollup -c"
+    "build-lib": "rollup -c",
+    "chromatic": "npx chromatic --project-token=chpt_e54df968cf9fca3"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.1",
@@ -37,6 +38,7 @@
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
     "@vitejs/plugin-react": "^4.3.1",
+    "chromatic": "^11.5.5",
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
