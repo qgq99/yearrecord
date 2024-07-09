@@ -12,7 +12,7 @@ node_modules
 # 组件库打包目录
 dist
 dist-ssr
-storybook-static
+# storybook-static
 *.local
 lib
 
