@@ -13,15 +13,6 @@ const config: StorybookConfig = {
   framework: {
     name: "@storybook/react-vite",
     options: {},
-  },
-  viteFinal: async (config, { configType }) => {
-    // return the customized config
-    return mergeConfig(config, {
-      // customize the Vite config here
-      build: {
-        outDir: "docs"  // 使得文档打包结果输出到docs目录以激活github pages
-      }
-    });
-  },
+  }
 };
 export default config;
