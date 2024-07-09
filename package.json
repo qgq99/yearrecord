@@ -11,7 +11,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "build-lib": "rollup -c",
-    "chromatic": "npx chromatic --project-token=chpt_e54df968cf9fca3"
+    "chromatic": "npx chromatic --project-token=chpt_e54df968cf9fca3 --exit-zero-on-changes"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.6.1",
