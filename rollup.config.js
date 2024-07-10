@@ -6,6 +6,7 @@ import externals from "rollup-plugin-node-externals";
 import postcss from "rollup-plugin-postcss";
 import generatePackageJson from "rollup-plugin-generate-package-json";
 import copy from "rollup-plugin-copy";
+import inject from "./plugin/rollup-plugin-css-inject.js";
 
 
 const generatePackageJsonOptions = {
@@ -71,7 +72,7 @@ export default {
         },
       }
     }),
-    postcss(),
+    // postcss(),
     generatePackageJson(generatePackageJsonOptions),
     copy({
       targets: [
@@ -81,6 +82,7 @@ export default {
         }
       ]
     }),
+    inject(),
     strip()
   ],
 }
