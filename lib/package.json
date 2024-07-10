@@ -1,0 +1,32 @@
+{
+  "name": "yearrecord",
+  "version": "0.0.1",
+  "description": "A react component that displays data for each day of the year",
+  "keywords": [
+    "yearrecord",
+    "year",
+    "data dispay",
+    "record",
+    "tooltip"
+  ],
+  "homepage": "https://qgq99.github.io/yearrecord/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qgq99/yearrecord.git"
+  },
+  "main": "index.js",
+  "author": {
+    "name": "Qin Guoqing",
+    "email": "qgq4227@163.com"
+  },
+  "license": "ISC",
+  "files": [
+    "./*",
+    "node_modules/*"
+  ],
+  "dependencies": {
+    "@floating-ui/react": "0.24.0",
+    "react": "^18.3.1",
+    "tslib": "^2.6.3"
+  }
+}

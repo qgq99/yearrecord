@@ -14,7 +14,7 @@ dist
 dist-ssr
 # storybook-static
 *.local
-lib
+# lib
 
 
 # Editor directories and files

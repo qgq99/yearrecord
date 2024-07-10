@@ -5,13 +5,38 @@ import typescript from "rollup-plugin-typescript2";
 import externals from "rollup-plugin-node-externals";
 import postcss from "rollup-plugin-postcss";
 import generatePackageJson from "rollup-plugin-generate-package-json";
+import copy from "rollup-plugin-copy";
 
 
 const generatePackageJsonOptions = {
   baseContents: pkg => {
     return {
-      name: "react-playground",
-      dependencies: {}
+      "name": "yearrecord",
+      "version": "0.0.1",
+      "description": "A react component that displays data for each day of the year",
+      "keywords": [
+        "yearrecord",
+        "year",
+        "data dispay",
+        "record",
+        "tooltip"
+      ],
+      "homepage": "https://qgq99.github.io/yearrecord/",
+      "repository": {
+        "type": "git",
+        "url": "https://github.com/qgq99/yearrecord.git"
+      },
+      "main": "index.js",
+      "author": {
+        "name": "Qin Guoqing",
+        "email": "qgq4227@163.com",
+      },
+      "license": "ISC",
+      "files": [
+        "./*",
+        "node_modules/*"
+      ],
+      "dependencies": {}
     }
   }
 };
@@ -19,7 +44,9 @@ const generatePackageJsonOptions = {
 
 
 export default {
-  input: "src\\index.ts",
+  input: [
+    "src\\index.ts",
+  ],
   output: {
     // 出口文件
     dir: "lib",
@@ -46,6 +73,14 @@ export default {
     }),
     postcss(),
     generatePackageJson(generatePackageJsonOptions),
+    copy({
+      targets: [
+        {
+          src: ["tmp/index.d.ts", "tmp/README.md"],
+          dest: "lib"
+        }
+      ]
+    }),
     strip()
   ],
 }
