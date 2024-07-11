@@ -48,6 +48,10 @@ export default {
   input: [
     "src\\index.ts",
   ],
+  external: [
+    "../stylejs/tooltip.css.js",
+    "../stylejs/monthRecord.css.js",
+  ],
   output: {
     // 出口文件
     dir: "lib",

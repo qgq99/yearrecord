@@ -111,42 +111,44 @@ export default function inject() {
      * @param {string} code 
      * @param {string} id 
      */
-    transform: async function (code, id) {
-
-      console.log(`正在处理: ${id}...`);
-      const regex = /import\s+["']\.[\w/]+\.css["'];?/g;  //用以获取css导入语句的正则表达式
-      let cssImports = code.match(regex);
-      if (Array.isArray(cssImports)) {  // 若无css导入语句, 匹配结果为空, 遍历会报错
-        for (let i of cssImports) {
-          /**
-           * 1. 通过当前代码文件的路径和导入css的文件名组合css文件绝对路径
-           * 2. 读取css文件内容
-           * 3. 将css内容嵌入到js代码中并生成一个chunk
-           * 4. 将源代码中的css导入语句替换为导入生成的chunk
-           */
-          // 1
-          const filename = i.split("\"")[1];
-          const abPath = getAbsolutePath(id, filename);
-          // 2
-          await readFileContent(abPath).then(data => {
-            // 3, 同时记录新生成chunk的id
-            const curCSS2JsFilename = this.emitFile({
-              type: "prebuilt-chunk",
-              fileName: `stylejs/${path.basename(abPath)}.js`,
-              code: css2Js(data, this.getFileName(cssInjectJsReferenceId))
+    transform: {
+      order: "post",
+      handler: async function (code, id) {
+        console.log(`正在处理: ${id}...`);
+        const regex = /import\s+["']\.[\w/]+\.css["'];?/g;  //用以获取css导入语句的正则表达式
+        let cssImports = code.match(regex);
+        if (Array.isArray(cssImports)) {  // 若无css导入语句, 匹配结果为空, 遍历会报错
+          for (let i of cssImports) {
+            /**
+             * 1. 通过当前代码文件的路径和导入css的文件名组合css文件绝对路径
+             * 2. 读取css文件内容
+             * 3. 将css内容嵌入到js代码中并生成一个chunk
+             * 4. 将源代码中的css导入语句替换为导入生成的chunk
+             */
+            // 1
+            const filename = i.split("\"")[1];
+            const abPath = getAbsolutePath(id, filename);
+            // 2
+            await readFileContent(abPath).then(data => {
+              // 3, 同时记录新生成chunk的id
+              const curCSS2JsFilename = this.emitFile({
+                type: "prebuilt-chunk",
+                fileName: `stylejs/${path.basename(abPath)}.js`,
+                code: css2Js(data, this.getFileName(cssInjectJsReferenceId))
+              });
+              // console.log(i, `import "${this.getFileName(curCSS2JsFilename)}"`);
+              //4
+              code = code.replace(i, `import "../${this.getFileName(curCSS2JsFilename)}"`);
+            }).catch(err => {
+              throw new Error(err);
             });
-            // console.log(i, `import "${this.getFileName(curCSS2JsFilename)}"`);
-            //4
-            code = code.replace(i, `import "../${this.getFileName(curCSS2JsFilename)}"`);
-          }).catch(err => {
-            throw new Error(err);
-          });
+          }
         }
-      }
-      // console.log(code);
-      return {
-        code: code
-      }
-    },
+        // console.log(code);
+        return {
+          code: code
+        }
+      },
+    }
   }
 }
