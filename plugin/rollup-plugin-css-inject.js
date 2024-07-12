@@ -88,16 +88,29 @@ const readFileContent = (filePath) => {
 
 export default function inject() {
   // emitFile返回一个referenceId, 通过该id可以访问到创建的文件的url
-  let cssInjectJsReferenceId;
+  let cssInjectJsReferenceId = null;
 
+  let addConfigExternal = null;
 
 
   return {
     name: "css-inject",
 
     // 将css代码注入方法写入一个单独的js文件
-    buildStart: function () {
-      console.log(`buildStart.......`);
+    buildStart: function (options) {
+      addConfigExternal = (newExternals) => {
+        console.log("updateConfig() not impl yet!");
+        /**
+         * 实现在任意钩子中向配置项external添加元素的思路:
+         * options钩子执行后, external属性被转换为一个函数, 类型推测为: string => boolean
+         * 1. 准备一个数组a存放被动态添加的外部路径,
+         * 2. 用一个变量oriExternal保存原始external函数,
+         * 3. 定义一个新函数, 类型同样为 (path:string) => boolean, 该函数逻辑为 return oriExternal(path) || a.include(path);
+         * 4. 用新函数替换配置对象的external属性,
+         * 5. 提供一个在整个插件对象中可访问的方法用来向数组a添加元素 
+         */
+      }
+
       // emitFile返回一个referenceId, 通过该id可以访问到创建的文件的url
       cssInjectJsReferenceId = this.emitFile({
         type: "prebuilt-chunk", // 预构建chunk, 不需要以某一个现有文件作为入口
@@ -114,7 +127,6 @@ export default function inject() {
     transform: {
       order: "post",
       handler: async function (code, id) {
-        console.log(`正在处理: ${id}...`);
         const regex = /import\s+["']\.[\w/]+\.css["'];?/g;  //用以获取css导入语句的正则表达式
         let cssImports = code.match(regex);
         if (Array.isArray(cssImports)) {  // 若无css导入语句, 匹配结果为空, 遍历会报错
@@ -136,7 +148,6 @@ export default function inject() {
                 fileName: `stylejs/${path.basename(abPath)}.js`,
                 code: css2Js(data, this.getFileName(cssInjectJsReferenceId))
               });
-              // console.log(i, `import "${this.getFileName(curCSS2JsFilename)}"`);
               //4
               code = code.replace(i, `import "../${this.getFileName(curCSS2JsFilename)}"`);
             }).catch(err => {
@@ -144,7 +155,7 @@ export default function inject() {
             });
           }
         }
-        // console.log(code);
+        addConfigExternal();
         return {
           code: code
         }
