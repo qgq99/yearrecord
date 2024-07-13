@@ -3,7 +3,6 @@ import resolve from "@rollup/plugin-node-resolve";
 import strip from "@rollup/plugin-strip";
 import typescript from "rollup-plugin-typescript2";
 import externals from "rollup-plugin-node-externals";
-import postcss from "rollup-plugin-postcss";
 import generatePackageJson from "rollup-plugin-generate-package-json";
 import copy from "rollup-plugin-copy";
 import inject from "./plugin/rollup-plugin-css-inject.js";
@@ -48,10 +47,6 @@ export default {
   input: [
     "src\\index.ts",
   ],
-  external: [
-    "../stylejs/tooltip.css.js",
-    "../stylejs/monthRecord.css.js",
-  ],
   output: {
     // 出口文件
     dir: "lib",
@@ -76,7 +71,6 @@ export default {
         },
       }
     }),
-    // postcss(),
     generatePackageJson(generatePackageJsonOptions),
     copy({
       targets: [

@@ -90,26 +90,25 @@ export default function inject() {
   // emitFile返回一个referenceId, 通过该id可以访问到创建的文件的url
   let cssInjectJsReferenceId = null;
 
-  let addConfigExternal = null;
-
+  // 该数组存放被动态添加的external路径项
+  const additionalExternalItems = [];
 
   return {
     name: "css-inject",
 
     // 将css代码注入方法写入一个单独的js文件
     buildStart: function (options) {
-      addConfigExternal = (newExternals) => {
-        console.log("updateConfig() not impl yet!");
-        /**
-         * 实现在任意钩子中向配置项external添加元素的思路:
-         * options钩子执行后, external属性被转换为一个函数, 类型推测为: string => boolean
-         * 1. 准备一个数组a存放被动态添加的外部路径,
-         * 2. 用一个变量oriExternal保存原始external函数,
-         * 3. 定义一个新函数, 类型同样为 (path:string) => boolean, 该函数逻辑为 return oriExternal(path) || a.include(path);
-         * 4. 用新函数替换配置对象的external属性,
-         * 5. 提供一个在整个插件对象中可访问的方法用来向数组a添加元素 
-         */
-      }
+      /**
+       * 实现在任意钩子中向配置项external添加元素的思路:
+       * options钩子执行后, external属性被转换为一个函数, 类型推测为: string => boolean
+       * 1. 准备一个数组a存放被动态添加的外部路径,
+       * 2. 用一个变量oriExternal保存原始external函数,
+       * 3. 定义一个新函数, 类型同样为 (path:string) => boolean, 该函数逻辑为 return oriExternal(path) || a.include(path);
+       * 4. 用新函数替换配置对象的external属性,
+       * 5. 提供一个在整个插件对象中可访问的方法用来向数组a添加元素 
+       */
+      const originalExternalFunc = options.external;
+      options.external = (item) => originalExternalFunc(item) || additionalExternalItems.includes(item);  //3
 
       // emitFile返回一个referenceId, 通过该id可以访问到创建的文件的url
       cssInjectJsReferenceId = this.emitFile({
@@ -120,46 +119,45 @@ export default function inject() {
     },
 
     /**
-     * 
+     * transform hook
      * @param {string} code 
      * @param {string} id 
      */
-    transform: {
-      order: "post",
-      handler: async function (code, id) {
-        const regex = /import\s+["']\.[\w/]+\.css["'];?/g;  //用以获取css导入语句的正则表达式
-        let cssImports = code.match(regex);
-        if (Array.isArray(cssImports)) {  // 若无css导入语句, 匹配结果为空, 遍历会报错
-          for (let i of cssImports) {
-            /**
-             * 1. 通过当前代码文件的路径和导入css的文件名组合css文件绝对路径
-             * 2. 读取css文件内容
-             * 3. 将css内容嵌入到js代码中并生成一个chunk
-             * 4. 将源代码中的css导入语句替换为导入生成的chunk
-             */
-            // 1
-            const filename = i.split("\"")[1];
-            const abPath = getAbsolutePath(id, filename);
-            // 2
-            await readFileContent(abPath).then(data => {
-              // 3, 同时记录新生成chunk的id
-              const curCSS2JsFilename = this.emitFile({
-                type: "prebuilt-chunk",
-                fileName: `stylejs/${path.basename(abPath)}.js`,
-                code: css2Js(data, this.getFileName(cssInjectJsReferenceId))
-              });
-              //4
-              code = code.replace(i, `import "../${this.getFileName(curCSS2JsFilename)}"`);
-            }).catch(err => {
-              throw new Error(err);
+    transform: async function (code, id) {
+      const regex = /import\s+["']\.[\w/]+\.css["'];?/g;  //用以获取css导入语句的正则表达式
+      let cssImports = code.match(regex);
+      if (Array.isArray(cssImports)) {  // 若无css导入语句, 匹配结果为空, 遍历会报错
+        for (let i of cssImports) {
+          /**
+           * 1. 通过当前代码文件的路径和导入css的文件名组合css文件绝对路径
+           * 2. 读取css文件内容
+           * 3. 将css内容嵌入到js代码中并生成一个chunk
+           * 4. 将源代码中的css导入语句替换为导入生成的chunk
+           */
+          // 1
+          const filename = i.split("\"")[1];
+          const abPath = getAbsolutePath(id, filename);
+          // 2
+          await readFileContent(abPath).then(data => {
+    // 3, 同时记录新生成chunk的id
+            const curCSS2JsFileReferenceId = this.emitFile({
+              type: "prebuilt-chunk",
+              fileName: `stylejs/${path.basename(abPath)}.js`,
+              code: css2Js(data, this.getFileName(cssInjectJsReferenceId))
             });
-          }
+            //4
+            const curCSS2JsFileImportPath = `../${this.getFileName(curCSS2JsFileReferenceId)}`
+            code = code.replace(i, `import "${curCSS2JsFileImportPath}"`);
+            // 将新生成的导入标记为external
+            additionalExternalItems.push(curCSS2JsFileImportPath);
+          }).catch(err => {
+            throw new Error(err);
+          });
         }
-        addConfigExternal();
-        return {
-          code: code
-        }
-      },
-    }
+      }
+      return {
+        code
+      }
+    },
   }
 }
