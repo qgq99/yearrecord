@@ -23,7 +23,7 @@ export const Default: Story = {
     gridColumnGap: "3px",
     year: new Date().getFullYear(),
     data: undefined,
-    themeColor: "red",
+    themeColor: "#39d353",
     tooltipTitileFunc: (_: DataRecord) => "tooltip title",
     tooltipTitlePlacement: "top",
     compact: false

@@ -1,4 +1,4 @@
-import { DataRecord, Day, Month } from "../stories/MonthRecord";
+import { DataRecord, Day, Month } from "../component/MonthRecord";
 
 /**
  * 判断某一年某一月的第一天是周几

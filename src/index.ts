@@ -1,6 +1,6 @@
-import { Tooltip } from "./stories/Tooltip";
-import { MonthRecord } from "./stories/MonthRecord";
-import { YearRecord } from "./stories/YearRecord";
+import { Tooltip } from "./component/Tooltip";
+import { MonthRecord } from "./component/MonthRecord";
+import { YearRecord } from "./component/YearRecord";
 
 
 export {
