@@ -12,7 +12,7 @@ const generatePackageJsonOptions = {
   baseContents: pkg => {
     return {
       "name": "yearrecord",
-      "version": "0.0.1",
+      "version": "0.0.4",
       "description": "A react component that displays data for each day of the year",
       "keywords": [
         "yearrecord",

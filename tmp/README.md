@@ -28,7 +28,7 @@ function App() {
 export default App
 ```
 then you will see:
-![image](../public/render_res.png)
+![image](https://raw.githubusercontent.com/qgq99/yearrecord/master/public/render_res.png)
 
 ## API
 
