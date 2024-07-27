@@ -16,18 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    // itemWidth: "10px",
-    // itemHeight: "10px",
-    // itemBorderRadius: "3px",
-    // gridRowGap: "3px",
-    // gridColumnGap: "3px",
-    // year: new Date().getFullYear(),
-    // month: new Date().getMonth() + 1 as Month,
-    // data: undefined,
-    // themeColor: "red",
-    // tooltipTitileFunc: _ => `tooltip title, ${_.data}`,
-    // tooltipTitlePlacement: "top",
-    // compact: false
+
   } as MonthRecordProps
 };
 

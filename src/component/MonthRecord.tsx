@@ -28,7 +28,8 @@ interface MonthRecordProps_ {
   themeColor: string,
   tooltipTitileFunc: (item: DataRecord) => string,
   tooltipTitlePlacement: placementType,
-  compact: boolean
+  compact: boolean,
+  onRecordClick: (item: DataRecord) => void
 }
 
 export type MonthRecordProps = Partial<MonthRecordProps_>;
@@ -46,7 +47,8 @@ export const MonthRecord: React.FC<MonthRecordProps> = ({
   themeColor = "#39d353",
   tooltipTitileFunc = _ => "tooltip title",
   tooltipTitlePlacement = "top",
-  compact = false
+  compact = false,
+  onRecordClick = _ => {}
 }: MonthRecordProps) => {
 
   if (!data) {
@@ -94,7 +96,7 @@ export const MonthRecord: React.FC<MonthRecordProps> = ({
             data.map((v, i) => {
               return (
                 <Tooltip title={tooltipTitileFunc(v)} key={i} placement={tooltipTitlePlacement}>
-                  <div className="day-record" style={{
+                  <div onClick={() => onRecordClick(v)} className="day-record" style={{
                     "--itemBorderRadius": itemBorderRadius,
                     "--themeColor": themeColor,
                     "--opacity": (v.data - mnData) / (mxData - mnData) + 0.05

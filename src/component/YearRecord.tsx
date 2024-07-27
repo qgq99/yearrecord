@@ -25,7 +25,8 @@ export const YearRecord: React.FC<YearRecordProps> = ({
   themeColor = "#39d353",
   tooltipTitileFunc = _ => "tooltip title",
   tooltipTitlePlacement = "top",
-  compact = false
+  compact = false,
+  onRecordClick = () => {}
 }: YearRecordProps) => {
   const months = new Array(12).fill(0);
 
@@ -48,6 +49,7 @@ export const YearRecord: React.FC<YearRecordProps> = ({
           tooltipTitileFunc={tooltipTitileFunc}
           tooltipTitlePlacement={tooltipTitlePlacement}
           compact={compact}
+          onRecordClick={onRecordClick}
         >
         </MonthRecord>
       )
@@ -72,6 +74,7 @@ export const YearRecord: React.FC<YearRecordProps> = ({
               data={(data ? data : generateRandomCompactData(new Date().getFullYear(), 1, 1, 365)) as DataRecord[]}
               tooltipTitileFunc={tooltipTitileFunc}
               tooltipTitlePlacement={tooltipTitlePlacement}
+              onRecordClick={onRecordClick}
             ></MonthRecord> :
             uncompactRenderContent()
         }
