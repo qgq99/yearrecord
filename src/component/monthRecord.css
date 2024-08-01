@@ -1,4 +1,4 @@
-.mr-container .day-record {
+.day-record {
   width: var(--itemWidth);
   height: var(--itemHeight);
   border-radius: var(--itemBorderRadius);

@@ -2,6 +2,7 @@ import React, { CSSProperties, useMemo } from "react"
 import { generateRandomMonthData, dayOfTheWeek, calcColumnCnt, getMaxAndMinValue } from "../utils/tool"
 import "./monthRecord.css"
 import { placementType, Tooltip } from "./Tooltip"
+import { MIN_ITEM_OPACITY } from "../utils/constant";
 
 
 export type Month = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
@@ -16,7 +17,7 @@ export interface DataRecord {
 }
 
 
-interface MonthRecordProps_ {
+export interface MonthRecordProps_ {
   itemWidth: string,
   itemHeight: string,
   itemBorderRadius: string,
@@ -48,7 +49,7 @@ export const MonthRecord: React.FC<MonthRecordProps> = ({
   tooltipTitileFunc = _ => "tooltip title",
   tooltipTitlePlacement = "top",
   compact = false,
-  onRecordClick = _ => {}
+  onRecordClick = _ => { }
 }: MonthRecordProps) => {
 
   if (!data) {
@@ -73,7 +74,7 @@ export const MonthRecord: React.FC<MonthRecordProps> = ({
     "--itemHeight": itemHeight
   }
   const [mxData, mnData] = useMemo(() => getMaxAndMinValue(data.map(_ => _.data)), []);
-  
+
   return (
     <>
       <div style={{
@@ -99,7 +100,7 @@ export const MonthRecord: React.FC<MonthRecordProps> = ({
                   <div onClick={() => onRecordClick(v)} className="day-record" style={{
                     "--itemBorderRadius": itemBorderRadius,
                     "--themeColor": themeColor,
-                    "--opacity": (v.data - mnData) / (mxData - mnData) + 0.05
+                    "--opacity": (v.data - mnData) / (mxData - mnData) + MIN_ITEM_OPACITY
                   } as CSSProperties}></div>
                 </Tooltip>
               )
