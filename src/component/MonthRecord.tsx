@@ -49,7 +49,7 @@ export const MonthRecord: React.FC<MonthRecordProps> = ({
   tooltipTitileFunc = _ => "tooltip title",
   tooltipTitlePlacement = "top",
   compact = false,
-  onRecordClick = _ => { }
+  onRecordClick = _ => undefined
 }: MonthRecordProps) => {
 
   if (!data) {

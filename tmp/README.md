@@ -30,10 +30,8 @@ export default App
 then you will see:
 ![image](https://raw.githubusercontent.com/qgq99/yearrecord/master/public/render_res.png)
 
-## API
-
-### API of YearRecord
-
+# Props
+## Props of YearRecord
 |         prop          |   type   |     default value      |                         description                          |
 | :-------------------: | :------: | :--------------------: | :---------------------------------------------------------- |
 |       itemWidth       |  string  |         “10px”         |            width of div of the single day record             |
@@ -48,16 +46,28 @@ then you will see:
 | tooltipTitlePlacement |  string  |         "top"          | the placement of the tooltip title, it is one of `["top", "bottom", "left", "right"]` |
 |        compact        | boolean  |         false          | if `compact===true`， then there will be no gap among months, and the format of `data` need to be changed. |
 
-### API of MonthRecord
+## Props of MonthRecord
 The props of `MonthRecord` is almost the same as `YearRecord`, because the props of the later are from the former, in other words, the most props of `YearRecord` will be directly passed to `MonthRecord`.The only prop `MonthRecord` has more than `YearRecord` is `month`:
 
 |  prop   | type    | default value | description                                                  |
-| :-----: | ------- | ------------- | ------------------------------------------------------------ |
+| :-----: | ------- | ------------- | :------------------------------------------------------------ |
 |  month  | number  | current month | it will be displayed as a Chinese string below the component, such as "7月" |
 | compact | boolean | false         | if true, the component will ignore prop `month`， and display nothing below itself. |
 
-### API of Tooltip
+## Props of Tooltip
 | prop      | type   | default value | description              |
-| --------- | ------ | ------------- | ------------------------ |
+| --------- | ------ | ------------- | :------------------------ |
 | title     | string | ""            | tooltip title            |
 | placement | string | "top"         | the same as `yearrecord` |
+
+## Props of Legend
+| prop             |          type          | default value | description                                              |
+| :--------------- | :--------------------: | :-----------: | :------------------------------------------------------- |
+| cnt              |         number         |       6       | the count of color blocks                                |
+| minText          |         string         |    "Less"     | the text which is shown on the left of the color blocks  |
+| maxText          |         string         |    "More"     | the text which is shown on the right of the color blocks |
+| orientation      | "horizon" \|"vertical" |   "horizon"   | the orientation of this component                        |
+| itemWidth        |         string         |    "10px"     | same as the corresponding prop of YearRecord             |
+| itemHeight       |         string         |    "10px"     | same as the corresponding prop of YearRecord             |
+| itemBorderRadius |         string         |     "3px"     | same as the corresponding prop of YearRecord             |
+| themeColor       |         string         |   "#39d353"   | same as the corresponding prop of YearRecord             |

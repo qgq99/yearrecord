@@ -1,16 +1,26 @@
-import React from "react";
-import { generateRandomCompactData, generateRandomMonthData } from "../utils/tool";
+import React, { CSSProperties } from "react";
+import { convertPlacementToInset, generateRandomCompactData, generateRandomMonthData } from "../utils/tool";
 import { DataRecord, Month, MonthRecord, MonthRecordProps } from "./MonthRecord";
+import Legend, { legendProps } from "./Legend";
+import "./yearRecord.css"
+import { placementType } from "./Tooltip";
 
 
-// type y = Omit<MonthRecordProps, "month">
-
-// export interface YearRecordProps extends Omit<MonthRecordProps, "month" | "data"> {
-//   data: DataRecord[][] | DataRecord[] | undefined
-// }
+/**
+ * 该属性应用在包裹Legend组件的div的css属性inset上
+ */
+export interface LegendContainerInsetType {
+  left?: string,
+  top?: string,
+  bottom?: string,
+  right?: string
+}
 
 export type YearRecordProps = Partial<Omit<MonthRecordProps, "month" | "data"> & {
-  data: DataRecord[][] | DataRecord[] | undefined
+  data: DataRecord[][] | DataRecord[] | undefined,
+  legendProps: legendProps,
+  showLegend: boolean,
+  legendPlacement?: placementType,
 }>
 
 
@@ -23,10 +33,13 @@ export const YearRecord: React.FC<YearRecordProps> = ({
   year = new Date().getFullYear(),
   data,
   themeColor = "#39d353",
-  tooltipTitileFunc = _ => "tooltip title",
   tooltipTitlePlacement = "top",
   compact = false,
-  onRecordClick = () => {}
+  legendProps = {},
+  showLegend = false,
+  legendPlacement = "bottom-end",
+  tooltipTitileFunc = _ => "tooltip title",
+  onRecordClick = _ => undefined
 }: YearRecordProps) => {
   const months = new Array(12).fill(0);
 
@@ -43,7 +56,7 @@ export const YearRecord: React.FC<YearRecordProps> = ({
           gridColumnGap={gridColumnGap}
           gridRowGap={gridRowGap}
           year={year}
-          month={i + 1 as Month} 
+          month={i + 1 as Month}
           themeColor={themeColor}
           data={generateRandomMonthData(year, i + 1 as Month, 0, 100)}
           tooltipTitileFunc={tooltipTitileFunc}
@@ -58,7 +71,7 @@ export const YearRecord: React.FC<YearRecordProps> = ({
 
   return (
     <>
-      <div style={{ display: "flex" }}>
+      <div className="yearRecord-container ">
         {
           compact ?
             <MonthRecord
@@ -77,6 +90,16 @@ export const YearRecord: React.FC<YearRecordProps> = ({
               onRecordClick={onRecordClick}
             ></MonthRecord> :
             uncompactRenderContent()
+        }
+        {
+          // showLegend为false时, 不渲染图例
+          showLegend &&
+          <div
+            className="legend-component-container"
+            style={{ "--inset": convertPlacementToInset(legendPlacement) } as CSSProperties}
+          >
+            <Legend {...legendProps}></Legend>
+          </div>
         }
       </div>
     </>

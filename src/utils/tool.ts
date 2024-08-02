@@ -1,4 +1,5 @@
 import { DataRecord, Day, Month } from "../component/MonthRecord";
+import { placementType } from "../component/Tooltip";
 
 /**
  * 判断某一年某一月的第一天是周几
@@ -122,6 +123,11 @@ const generateRandomCompactData = (year: number, month: number, day: number, dat
   return fakeData;
 }
 
+/**
+ * 获取一个数组的最大值和最小值
+ * @param nums 
+ * @returns 
+ */
 const getMaxAndMinValue = (nums: number[]): [number, number] => {
   let mx = Number.NEGATIVE_INFINITY, mn = Number.POSITIVE_INFINITY;
   for (let i of nums) {
@@ -129,6 +135,50 @@ const getMaxAndMinValue = (nums: number[]): [number, number] => {
     mn = Math.min(mn, i);
   }
   return [mx, mn];
+}
+
+const convertPlacementToInset = (placement: placementType) => {
+  let result;
+  switch (placement) {
+    case "top":
+      result = "-20px 0 auto 0";
+      break;
+    case "left":
+      result = "0 auto 0 -40px";
+      break;
+    case "right":
+      result = "0 -40px 0 auto";
+      break;
+    case "bottom":
+      result = "auto 0 -30px 0";
+      break;
+    case "top-start":
+      result = "-20px auto auto 0";
+      break;
+    case "top-end":
+      result = "-20px 0 auto auto";
+      break;
+    case "right-start":
+      result = "0 -40px auto auto";
+      break;
+    case "right-end":
+      result = "auto -40px 0 auto";
+      break;
+    case "bottom-start":
+      result = "auto auto -30px 0";
+      break;
+    case "bottom-end":
+      result = "auto 0 -30px auto";
+      break;
+    case "left-start":
+      result = "0 auto auto -40px";
+      break;
+    case "left-end":
+      result = "auto auto 0 -40px";
+      break;
+    default: result = "auto auto auto auto"
+  }
+  return result;
 }
 
 
@@ -139,5 +189,6 @@ export {
   convertToRGBA,
   calcColumnCnt,
   generateRandomCompactData,
-  getMaxAndMinValue
+  getMaxAndMinValue,
+  convertPlacementToInset
 }
